@@ -12,7 +12,8 @@ require.config({
     },
 });
 
-define(["widgets/js/widget", "widgets/js/manager", "base/js/utils", "threejs", "threejs-orbit", "threejs-detector"], function(widget, manager, utils, THREE) {
+define(["widgets/js/widget", "widgets/js/manager", "base/js/utils", "underscore", "threejs", "threejs-orbit", "threejs-detector"], 
+       function(widget, manager, utils, _, THREE) {
     console.log("loading pythreejs");
     var register = {};
     var RendererView = widget.WidgetView.extend({
@@ -275,6 +276,10 @@ define(["widgets/js/widget", "widgets/js/manager", "base/js/utils", "threejs", "
             this.obj.add(new_obj);
             this.needs_update()
         },
+    }, {
+        serializers: _.extend({
+            children: {deserialize: widget.unpack_models}
+        }, ThreeView.serializers)
     });
     register['Object3dView'] = Object3dView;
 
